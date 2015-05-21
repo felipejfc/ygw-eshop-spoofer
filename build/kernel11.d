@@ -1,9 +1,5 @@
-main.o: /Users/FelipeCavalcanti/dev/3ds/ygw-eshop-spoofer/source/main.cpp \
- /opt/devkitpro/ctrcommon/include/ctrcommon/input.hpp \
- /opt/devkitpro/ctrcommon/include/ctrcommon/gpu.hpp \
- /opt/devkitpro/ctrcommon/include/ctrcommon/types.hpp \
- /opt/devkitpro/ctrcommon/include/ctrcommon/platform.hpp \
- /opt/devkitpro/ctrcommon/include/ctrcommon/service.hpp \
+kernel11.o: \
+ /Users/FelipeCavalcanti/dev/3ds/ygw-eshop-spoofer/source/kernel11.cpp \
  /opt/devkitpro/libctru/include/3ds.h \
  /opt/devkitpro/libctru/include/3ds/types.h \
  /opt/devkitpro/libctru/include/3ds/svc.h \
@@ -40,20 +36,7 @@ main.o: /Users/FelipeCavalcanti/dev/3ds/ygw-eshop-spoofer/source/main.cpp \
  /opt/devkitpro/libctru/include/3ds/gpu/registers.h \
  /opt/devkitpro/libctru/include/3ds/gpu/shbin.h \
  /opt/devkitpro/libctru/include/3ds/gpu/shaderProgram.h \
- /opt/devkitpro/libctru/include/3ds/sdmc.h \
- /Users/FelipeCavalcanti/dev/3ds/ygw-eshop-spoofer/include/constants.h \
- /Users/FelipeCavalcanti/dev/3ds/ygw-eshop-spoofer/include/patches.h \
- /Users/FelipeCavalcanti/dev/3ds/ygw-eshop-spoofer/include/kernel11.h
-
-/opt/devkitpro/ctrcommon/include/ctrcommon/input.hpp:
-
-/opt/devkitpro/ctrcommon/include/ctrcommon/gpu.hpp:
-
-/opt/devkitpro/ctrcommon/include/ctrcommon/types.hpp:
-
-/opt/devkitpro/ctrcommon/include/ctrcommon/platform.hpp:
-
-/opt/devkitpro/ctrcommon/include/ctrcommon/service.hpp:
+ /opt/devkitpro/libctru/include/3ds/sdmc.h
 
 /opt/devkitpro/libctru/include/3ds.h:
 
@@ -128,9 +111,3 @@ main.o: /Users/FelipeCavalcanti/dev/3ds/ygw-eshop-spoofer/source/main.cpp \
 /opt/devkitpro/libctru/include/3ds/gpu/shaderProgram.h:
 
 /opt/devkitpro/libctru/include/3ds/sdmc.h:
-
-/Users/FelipeCavalcanti/dev/3ds/ygw-eshop-spoofer/include/constants.h:
-
-/Users/FelipeCavalcanti/dev/3ds/ygw-eshop-spoofer/include/patches.h:
-
-/Users/FelipeCavalcanti/dev/3ds/ygw-eshop-spoofer/include/kernel11.h:

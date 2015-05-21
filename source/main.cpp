@@ -1,59 +1,78 @@
-#include <ctrcommon/app.hpp>
-#include <ctrcommon/gpu.hpp>
 #include <ctrcommon/input.hpp>
+#include <ctrcommon/gpu.hpp>
 #include <ctrcommon/platform.hpp>
-#include <ctrcommon/ui.hpp>
-
-#include <sys/dirent.h>
-#include <sys/errno.h>
-#include <stdio.h>
-#include <string.h>
-
+#include <ctrcommon/service.hpp>
+#include <3ds.h>
+#include "constants.h"
 #include <sstream>
+#include <stdio.h>
+#include "patches.h"
+#include "kernel11.h"
 
 using namespace std;
 
-int main(int argc, char **argv) {
-  if(!platformInit()) {
+#define log(...) fprintf(stderr, __VA_ARGS__)
+
+bool applySpoof(){
+  //need to patch it here to allow debug
+  //make the changes and exit
+  if(!serviceRequire("kernel")){
+    return false;
+  }
+  gputDrawString("khax done!", (gpuGetViewportWidth() - gputGetStringWidth("khax done!", 8)) / 2, 100, 8, 8, 0 ,0 ,0);
+
+  SaveVersionConstants();
+  PatchSrvAccess();
+  gputDrawString("srv patched", (gpuGetViewportWidth() - gputGetStringWidth("srv patched", 8)) / 2, 130, 8, 8, 0 ,0 ,0);
+
+  if(!KernelBackdoor(PatchProcess)){
+    gputDrawString("patch applied!", (gpuGetViewportWidth() - gputGetStringWidth("patch applied!", 8)) / 2, 70, 8, 8, 0 ,0 ,0);
   }
 
-  bool exit = false;
+  HB_FlushInvalidateCache(); // Just to be sure!
 
-  auto onLoop = [&]() {
+  return true;
+}
 
-    bool breakLoop = false;
+int main(int argc, char **argv) {
+  if(!platformInit()) {
+    return 0;
+  }
+
+  stringstream stream;
+  stream << "A - Apply spoof and exit" << "\n";
+  stream << "B - Exit" << "\n";
+  string str = stream.str();
+
+  gpuViewport(TOP_SCREEN, 0, 0, TOP_WIDTH, TOP_HEIGHT);
+  gputOrtho(0, TOP_WIDTH, 0, TOP_HEIGHT, -1, 1);
+  gpuClearColor(0xFF, 0xFF, 0xFF, 0xFF);
+
+  while(platformIsRunning()) {
+    inputPoll();
 
     if(inputIsPressed(BUTTON_A)) {
-      //Apply patch
-      breakLoop = true;
+      applySpoof();
+      break;
     }
 
     if(inputIsPressed(BUTTON_B)) {
-      //Exit
-      exit = true;
-      breakLoop = true;
-    }
-
-    std::stringstream stream;
-    stream << "A - Spoof eshop and exit" << "\n";
-    stream << "B - Exit" << "\n";
-
-    string str = stream.str();
-    const string title = "YGW Eshop Spoofer v0.1.0";
-    gputDrawString(title, (gpuGetViewportWidth() - gputGetStringWidth(title, 2)) / 2, (gpuGetViewportHeight() - gputGetStringHeight(title, 2) + gputGetStringHeight(str)) / 2, 2);
-    gputDrawString(str, (gpuGetViewportWidth() - gputGetStringWidth(str)) / 2, 4);
-
-    return breakLoop;
-  };
-
-  while(platformIsRunning()) {
-    if(exit){
       break;
     }
-    return onLoop();
+
+    // gpuClear();
+    const string title = "Ygw eshop spoofer";
+    const string credit = "by felipejfc";
+    gpuClear();
+    gputDrawString(title, (gpuGetViewportWidth() - gputGetStringWidth(title, 12)) / 2, (gpuGetViewportHeight() - gputGetStringHeight(title, 12))/2, 12, 12, 0 , 0 , 0);
+    gputDrawString(credit, (gpuGetViewportWidth() - gputGetStringWidth(title, 8)) / 2, (gpuGetViewportHeight() - gputGetStringHeight(title, 8))/2 - 50, 8, 8, 0, 0, 0);
+    gputDrawString(str, (gpuGetViewportWidth() - gputGetStringWidth(str, 8)) / 2, (gpuGetViewportHeight() - gputGetStringHeight(srt, 8))/2-100, 8, 8, 0 , 0 , 0);
+
+    gpuFlush();
+    gpuFlushBuffer();
+    gpuSwapBuffers(true);
   }
 
   platformCleanup();
-
   return 0;
 }
