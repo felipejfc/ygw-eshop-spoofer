@@ -1,6 +1,6 @@
 YGW Eshop Spoofer (Y a Gateway!?)
 ==================================
 
-*** Dependencies
+### Dependencies
 
 [ctrcommon](https://github.com/Steveice10/ctrcommon)
