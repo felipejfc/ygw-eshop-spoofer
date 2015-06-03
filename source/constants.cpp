@@ -31,6 +31,7 @@ int ScanKProcList()
 {
     curr_kproc_addr = *(u32*)0xFFFF9004;
     FindKProcStart();
+    return 0;
 }
 
 void SaveVersionConstants()
